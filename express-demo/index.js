@@ -1,9 +1,21 @@
 const Joi = require('joi');
 const express = require('express');
-
+const helmet = require('helmet')
 const app = express();
-app.use(express.json());
 
+
+app.use(express.json());
+app.use(express.static())
+app.use(helmet());
+
+const logger = require('./logger');
+
+app.use(logger);
+
+app.use(function(req, res, next){
+  console.log('Authenticating...')
+  next();
+})
 
 const courses = [
   { id: 1, name: 'course1' },
