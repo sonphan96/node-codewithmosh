@@ -1,16 +1,16 @@
 const Joi = require('joi');
 const express = require('express');
-const helmet = require('helmet')
+
 const app = express();
-
-
-app.use(express.json());
-app.use(express.static())
-app.use(helmet());
-
+const morgan = require('morgan');
 const logger = require('./logger');
 
-app.use(logger);
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
+
+app.use(express.json());
+
+
 
 app.use(function(req, res, next){
   console.log('Authenticating...')
